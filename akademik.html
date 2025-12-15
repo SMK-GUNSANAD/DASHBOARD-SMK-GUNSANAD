@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unit HEM - SMK Gunsanad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --hitam:#1a1a1a; --kuning:#ffc107; --hijau:#28a745; --putih:#ffffff;
+    }
+    body {
+      font-family:'Oswald',sans-serif; margin:0; background:var(--putih); color:var(--hitam);
+    }
+    header {
+      padding:18px; border-bottom:4px solid var(--hijau);
+      background:var(--putih); display:flex; align-items:center; gap:12px;
+    }
+   
+    header img { width:64px; height:64px; border-radius:8px; object-fit:cover; }
+    header h1 { margin:0; color:var(--kuning); }
+    main { max-width:920px; margin:20px auto; padding:16px; }
+    form {
+      background:var(--putih); border-radius:10px; padding:18px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.06);
+    }
+    label { display:block; margin-top:10px; font-weight:700; }
+    input, textarea, select {
+      width:100%; padding:10px; margin-top:6px;
+      border:2px solid rgba(0,0,0,0.08); border-radius:8px;
+    }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .actions { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .btn-primary {
+      background:var(--kuning); border:none; padding:12px 16px;
+      border-radius:8px; font-weight:700; cursor:pointer;
+    }
+    table {
+      width:100%; border-collapse:collapse; margin-top:20px;
+    }
+    th, td {
+      border:1px solid rgba(0,0,0,0.08); padding:10px; text-align:center;
+    }
+    th { background:var(--hijau); color:var(--putih); }
+    
+    main {
+    flex: 3;
+    padding-bottom: 150px; /* beri ruang supaya footer tak rapat sangat */
+  }
+    footer {
+      background:var(--putih); color:var(--hitam); text-align:center;
+      padding:12px; margin-top:24px; font-weight:700;
+    }
+    @media(max-width:700px){
+      .row{grid-template-columns:1fr}
+      header{flex-direction:column; align-items:flex-start}
+    }
+    main{ padding:28px; max-width:1100px; margin:0 auto; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; }
+    .card{ padding:32px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); background:linear-gradient(180deg,var(--white), #fbfbfb); text-align:center; font-weight:700; text-transform:uppercase; }
+    .btn-hem, .btn-perdana{ background:var(--kuning); color:var(--black); padding:18px 8px; border-radius:12px; display:inline-block; text-decoration:none; }
+    .btn-hem, .btn-t6{ background:var(--kuning); color:var(--black); padding:18px 8px; border-radius:12px; display:inline-block; text-decoration:none; }
+    .btn-hem, .btn-ppki{ background:var(--kuning); color:var(--black); padding:18px 8px; border-radius:12px; display:inline-block; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo-smkgunsanad.png" alt="logo">
+    <div>
+      <h1>UNIT HAL EHWAL MURID</h1>
+      <div style="font-weight:700;">SMK GUNSANAD BERABIS CEMERLANG</div>
+    </div>
+  </header>
+ <main>
+       <section style="margin-top:10px; text-align:center;">
+      <h2 id="welcome-title"></h2>
+      <p id="welcome-desc"></p>
+    </section>
+   
+  <div class="grid" id="buttonGrid">
+      
+    </div>
+    
+    
+    <div class="grid" id="buttonGrid">
+      <a href="#" target="_blank" class="card btn-perdana" id="unit-hem">PERDANA 1 - 5</a>
+      <a href="#" target="_blank" class="card btn-t6" id="unit-hem">TINGKATAN 6</a>
+      <a href="#" target="_blank" class="card btn-ppki" id="unit-hem">PENDIDIKAN KHAS</a>
+   </div>
+</body>
+
+</html>
