@@ -49,26 +49,34 @@ const auth = {
   },
 
   requireSection(section) {
-    const user = this.getUser();
+  console.log("requireSection called with:", section);
 
-    // 🔒 Not logged in
-    if (!user) {
-      window.location.replace("login.html");
-      return;
-    }
+  const user = this.getUser();
 
-    // 🔒 No role or permissions
-    if (!user.role || !this.permissions[user.role]) {
-      alert("Invalid access");
-      this.logout();
-      return;
-    }
-
-    // 🔒 Section not allowed
-    if (!this.permissions[user.role].includes(section)) {
-      alert("Access denied");
-      window.location.replace("index.html");
-    }
+  // 🔒 Not logged in
+  if (!user) {
+    window.location.replace("login.html");
+    return;
   }
 
-};
+  // 🔒 No section provided (ignore accidental calls)
+  if (!section) {
+    console.warn("requireSection called without section — ignored");
+    return;
+  }
+
+  // 🔒 Invalid role
+  if (!user.role || !this.permissions[user.role]) {
+    alert("Invalid access");
+    this.logout();
+    return;
+  }
+
+  // 🔒 Section not allowed
+  if (!this.permissions[user.role].includes(section)) {
+    alert("Access denied");
+    window.location.replace("index.html");
+  }
+}
+
+
