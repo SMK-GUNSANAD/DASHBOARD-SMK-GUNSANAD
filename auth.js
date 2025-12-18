@@ -48,27 +48,30 @@ const auth = {
     }
   },
 
-  requireSection(section) {
+ requireSection(section) {
   console.log("requireSection called with:", section);
 
-  const user = this.getUser();
-
-  // 🔒 Not logged in
-  if (!user) {
+  // 🔒 HARD BLOCK — no session, no access (non-negotiable)
+  if (!sessionStorage.getItem("auth_user")) {
     window.location.replace("login.html");
     return;
   }
 
-  // 🔒 No section provided (ignore accidental calls)
-  if (!section) {
-    console.warn("requireSection called without section — ignored");
+  // Parse user AFTER existence is confirmed
+  let user;
+  try {
+    user = JSON.parse(sessionStorage.getItem("auth_user"));
+  } catch (e) {
+    sessionStorage.removeItem("auth_user");
+    window.location.replace("login.html");
     return;
   }
 
   // 🔒 Invalid role
   if (!user.role || !this.permissions[user.role]) {
     alert("Invalid access");
-    this.logout();
+    sessionStorage.removeItem("auth_user");
+    window.location.replace("login.html");
     return;
   }
 
@@ -78,5 +81,6 @@ const auth = {
     window.location.replace("index.html");
   }
 }
+
 
 
