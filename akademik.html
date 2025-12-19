@@ -81,61 +81,13 @@
   <div class="grid" id="buttonGrid">
       
     </div>
-       
+    
+    
     <div class="grid" id="buttonGrid">
       <a href="#" target="_blank" class="card btn-perdana" id="unit-hem">PERDANA 1 - 5</a>
       <a href="#" target="_blank" class="card btn-t6" id="unit-hem">TINGKATAN 6</a>
       <a href="#" target="_blank" class="card btn-ppki" id="unit-hem">PENDIDIKAN KHAS</a>
    </div>
-
-   <script>
-/* =========================
-   CONFIG
-========================= */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzhMzuuK4sOO9JEmh4wtPs1-cauMdNNMv-s0Yr1rsYAeH_Lu_ruqfFbt2hliuuv_r0N/exec';
-
-/* =========================
-   TOKEN GUARD
-========================= */
-function getToken() {
-  return new URLSearchParams(window.location.search).get('token');
-}
-
-async function guardAkademik() {
-  const token = getToken();
-
-  if (!token) {
-    window.location.href = 'login.html?section=akademik';
-    return;
-  }
-
-  try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'validate',
-        token: token
-      })
-    });
-
-    const data = await res.json();
-
-    if (!data.valid) {
-      window.location.href = 'login.html?section=akademik';
-    }
-
-    // OPTIONAL (later): show username / role here
-
-  } catch (e) {
-    window.location.href = 'login.html?section=akademik';
-  }
-}
-
-guardAkademik();
-</script>
-
-   
 </body>
 
 </html>
