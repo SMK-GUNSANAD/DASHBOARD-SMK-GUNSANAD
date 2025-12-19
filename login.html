@@ -67,25 +67,12 @@
   </form>
 </div>
 
+<script>
 /* =========================
-   CONFIG - USE YOUR NEW DEPLOYMENT URL
+   CONFIG
 ========================= */
-// In login.html - make sure this matches your deployed URL
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzhMzuuK4sOO9JEmh4wtPs1-cauMdNNMv-s0Yr1rsYAeH_Lu_ruqfFbt2hliuuv_r0N/exec';
-
-// And make sure you're sending JSON
-await fetch(GAS_URL, {
-  method: "POST",
-  mode: "no-cors", // Try this if CORS persists
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    action: "login",
-    username: username,
-    password: password
-  })
-});
+const GAS_URL =
+  'https://script.google.com/macros/s/AKfycbyutqEHilu83fKqUDMqhHeNdyxkQB9CynhFo5IobgO3SCn-Xns4574OtdrLlrN27oQ6/exec';
 
 /* =========================
    HELPERS
@@ -102,48 +89,42 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
-  const section = getParam("section");
-  const errorMsg = document.getElementById("errorMsg");
+  const section  = getParam("section");
 
   if (!section) {
-    errorMsg.textContent = "Invalid access.";
+    document.getElementById("errorMsg").textContent = "Invalid access.";
     return;
   }
 
   try {
-    const response = await fetch(GAS_URL, {
+    const formData = new URLSearchParams();
+    formData.append("action", "login");
+    formData.append("username", username);
+    formData.append("password", password);
+
+    const res = await fetch(GAS_URL, {
       method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        action: "login",
-        username: username,
-        password: password
-      })
+      body: formData
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
     if (!data.success) {
-      errorMsg.textContent = data.message || "Login failed. Check username/password.";
+      document.getElementById("errorMsg").textContent = "Login gagal.";
       return;
     }
 
-    // Redirect with token
     if (section === "akademik") {
-      window.location.href = `akademik.html?token=${data.token}`;
+      window.location.href = "akademik.html?token=" + data.token;
     }
 
   } catch (err) {
-    console.error("Login error:", err);
-    errorMsg.textContent = "Server error. Please try again.";
+    console.error("LOGIN ERROR:", err);
+    document.getElementById("errorMsg").textContent =
+      "Login server error.";
   }
 });
+</script>
 
 </body>
 </html>
-
-
-
-
