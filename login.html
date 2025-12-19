@@ -67,12 +67,10 @@
   </form>
 </div>
 
-<script>
 /* =========================
-   CONFIG
+   CONFIG - USE YOUR NEW DEPLOYMENT URL
 ========================= */
-const GAS_URL =
-  'https://script.google.com/macros/s/AKfycbyutqEHilu83fKqUDMqhHeNdyxkQB9CynhFo5IobgO3SCn-Xns4574OtdrLlrN27oQ6/exec';
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_NEW_DEPLOYMENT_ID/exec';
 
 /* =========================
    HELPERS
@@ -89,43 +87,46 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
-  const section  = getParam("section");
+  const section = getParam("section");
+  const errorMsg = document.getElementById("errorMsg");
 
   if (!section) {
-    document.getElementById("errorMsg").textContent = "Invalid access.";
+    errorMsg.textContent = "Invalid access.";
     return;
   }
 
   try {
-    const formData = new URLSearchParams();
-    formData.append("action", "login");
-    formData.append("username", username);
-    formData.append("password", password);
-
-    const res = await fetch(GAS_URL, {
+    const response = await fetch(GAS_URL, {
       method: "POST",
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: "login",
+        username: username,
+        password: password
+      })
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
     if (!data.success) {
-      document.getElementById("errorMsg").textContent = "Login gagal.";
+      errorMsg.textContent = data.message || "Login failed. Check username/password.";
       return;
     }
 
+    // Redirect with token
     if (section === "akademik") {
-      window.location.href = "akademik.html?token=" + data.token;
+      window.location.href = `akademik.html?token=${data.token}`;
     }
 
   } catch (err) {
-    console.error("LOGIN ERROR:", err);
-    document.getElementById("errorMsg").textContent =
-      "Login server error.";
+    console.error("Login error:", err);
+    errorMsg.textContent = "Server error. Please try again.";
   }
 });
-</script>
 
 </body>
 </html>
+
 
