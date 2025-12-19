@@ -59,7 +59,8 @@
 
     <label>Password</label>
     <input type="password" id="password" required>
-<p>case sensitive!</p>
+
+    <p>case sensitive!</p>
 
     <button type="submit">Login</button>
     <div id="errorMsg" class="error"></div>
@@ -70,8 +71,9 @@
 /* =========================
    CONFIG
 ========================= */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRw33_BiooWoKZagZNNCZrEr9Tzs8Yxn54ALvirD5o2W1UdkfSobiqDEazKM4SGYIv/exec?v=' + Date.now();
-
+const GAS_URL =
+  'https://script.google.com/macros/s/AKfycbxRw33_BiooWoKZagZNNCZrEr9Tzs8Yxn54ALvirD5o2W1UdkfSobiqDEazKM4SGYIv/exec?v='
+  + Date.now();
 
 /* =========================
    HELPERS
@@ -95,15 +97,16 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     return;
   }
 
-	const formData = new URLSearchParams();
-	formData.append("action", "login");
-	formData.append("username", username);
-	formData.append("password", password);
+  try {
+    const formData = new URLSearchParams();
+    formData.append("action", "login");
+    formData.append("username", username);
+    formData.append("password", password);
 
-	const res = await fetch(GAS_URL, {
-  	method: "POST",
-  	body: formData
-	});
+    const res = await fetch(GAS_URL, {
+      method: "POST",
+      body: formData
+    });
 
     const data = await res.json();
 
@@ -112,26 +115,17 @@ document.getElementById("loginForm").addEventListener("submit", async function (
       return;
     }
 
-    /* =========================
-       REDIRECT WITH TOKEN
-    ========================= */
     if (section === "akademik") {
-      window.location.href =
-        `akademik.html?token=${data.token}`;
+      window.location.href = "akademik.html?token=" + data.token;
     }
 
   } catch (err) {
-    document.getElementById("errorMsg").textContent = "Login server error.";
+    console.error("LOGIN ERROR:", err);
+    document.getElementById("errorMsg").textContent =
+      "Login server error.";
   }
 });
 </script>
-	
+
 </body>
 </html>
-
-
-
-
-
-
-
