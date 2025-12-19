@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Test GAS Login</h2>
+  <input id="user" placeholder="Username" value="admin1">
+  <input id="pass" type="password" placeholder="Password" value="123">
+  <button onclick="testLogin()">Test Login</button>
+  <pre id="result"></pre>
+  
+  <script>
+  async function testLogin() {
+    const GAS_URL = 'YOUR_GAS_URL_HERE';
+    
+    const response = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'login',
+        username: document.getElementById('user').value,
+        password: document.getElementById('pass').value
+      })
+    });
+    
+    const data = await response.json();
+    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+  }
+  </script>
+</body>
+</html>
