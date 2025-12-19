@@ -95,16 +95,15 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     return;
   }
 
-  try {
-    const res = await fetch(GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "login",
-        username: username,
-        password: password
-      })
-    });
+	const formData = new URLSearchParams();
+	formData.append("action", "login");
+	formData.append("username", username);
+	formData.append("password", password);
+
+	const res = await fetch(GAS_URL, {
+  	method: "POST",
+  	body: formData
+	});
 
     const data = await res.json();
 
@@ -129,6 +128,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 	
 </body>
 </html>
+
 
 
 
