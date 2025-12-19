@@ -70,7 +70,22 @@
 /* =========================
    CONFIG - USE YOUR NEW DEPLOYMENT URL
 ========================= */
-const GAS_URL = 'https://script.google.com/macros/s/YOUR_NEW_DEPLOYMENT_ID/exec';
+// In login.html - make sure this matches your deployed URL
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzE0ERNTFYdCjug5OKYnL1BTuiFsilG-JXL3mYFDqRsXAJpq6TJBR0gBGATuo0UHMYY/exec';
+
+// And make sure you're sending JSON
+await fetch(GAS_URL, {
+  method: "POST",
+  mode: "no-cors", // Try this if CORS persists
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    action: "login",
+    username: username,
+    password: password
+  })
+});
 
 /* =========================
    HELPERS
@@ -128,5 +143,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
 </body>
 </html>
+
 
 
